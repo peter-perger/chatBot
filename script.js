@@ -1,13 +1,19 @@
 const chatBody = document.querySelector('.js-chat-body');
 const messageInput = document.querySelector('.js-message-input');
 const sendMessageButton = document.querySelector('.js-send-message');
+const fileInput = document.querySelector('#file-input');
+const fileUploadWrapper = document.querySelector('.file-upload-wrapper');
 
 //API setup
 const API_key = "AIzaSyBk9GOPHZ6boo_fF6-vhUj4gop4stESTDQ"; 
 const API_url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_key}`;
 
 const userData =  {
-  message: null
+  message: null,
+  file: {
+    data: null,
+    mime_type: null
+  }
 }
 
 async function generateBotResponse (incomingMessageElement) {
@@ -16,10 +22,11 @@ async function generateBotResponse (incomingMessageElement) {
   //API request options
   const requestOptions = {
     method: "POST",
-    header: {'Content-Type': 'application/json'},
+    headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
       contents: [{
-        parts: [{text: userData.message}]
+        parts: [{text: userData.message}, 
+        ...(userData.file.data ? [{ inline_data: userData.file}] : [])]
       }]
     })
   }
@@ -43,6 +50,7 @@ async function generateBotResponse (incomingMessageElement) {
     messageElement.style.color = "#ff0000";
   }
   finally {
+    userData.file = {};
     incomingMessageElement.classList.remove('thinking');
     chatBody.scrollTo({top: chatBody.scrollHeight, behavior: "smooth"});
   }
@@ -60,8 +68,13 @@ function handleOutgoingMessage (e) {
   e.preventDefault();
   userData.message = messageInput.value.trim();
   messageInput.value = '';
+  fileUploadWrapper.classList.remove("file-uploaded");
 
-  const messageContent = `<div class="message-text"></div>`
+  const messageContent = `
+    <div class="message-text"></div>
+      ${userData.file.data ? `
+          <img src="data:${userData.file.mime_type};base64,${userData.file.data}" class="attachment"/>` : ""}
+        `
     
   const messageElement = createMessageElement(messageContent, 'user-message');
   messageElement.querySelector('.message-text').textContent = userData.message;
@@ -97,4 +110,32 @@ messageInput.addEventListener('keydown', (e) => {
   }
 })
 
+//Handle file input change
+fileInput.addEventListener("change", () => {
+  const file = fileInput.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = (e) => {
+    fileUploadWrapper.querySelector('img').src = e.target.result;
+    fileUploadWrapper.classList.add('file-uploaded');
+    const base64String = e.target.result.split(",")[1];
+
+    //Store file data in userdata
+    userData.file = {
+        data: base64String,
+        mime_type: file.type
+      }
+  
+    fileInput.value = "";
+  }
+
+  reader.readAsDataURL(file);
+});
+
 sendMessageButton.addEventListener('click', (e) => handleOutgoingMessage(e));
+
+document.querySelector('#file-upload').addEventListener('click', () => {
+  fileInput.click();
+})

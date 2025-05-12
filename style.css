@@ -184,6 +184,13 @@ body {
   box-shadow: 6px 6px 1px #7e9ebe;
 }
 
+.chat-body .user-message .attachment {
+  width: 60%;
+  border-radius: 10px 10px 3px 10px;
+  margin-top: 10px;
+  box-shadow: 6px 6px 1px rgb(255, 227, 86);
+}
+
 /*FOOTER*/
 
 .footer {
@@ -269,6 +276,28 @@ body {
 
 .chat-form .message-input:valid~.chat-controls .send-message { /*!!!!!!*/
   display: block;
+}
+
+.chat-form .file-upload-wrapper {
+  height: 35px;
+  width: 35px;
+  position: relative;
+}
+
+.chat-form .file-upload-wrapper .preview-image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  border-radius: 50%;
+  
+  position: absolute;
+  display: none;
+}
+
+.chat-form .file-uploaded .preview-image {
+  display: block;
+  transition: 0.3s ease-in-out;
 }
 
 

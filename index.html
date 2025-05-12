@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="chatbot-popup">
-    <!--Header-->
+    <!--header-->
     <div class="chat-header">
       <div class="header-info">
         <img class="robot-head" src="images/robot-head.svg">
@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <!--chatbot-footer-->
+    <!--footer-->
     <div class="footer">
       <form action="#" class="chat-form">
         <textarea placeholder="Ask anything . . ." class="message-input js-message-input" required></textarea>
@@ -39,12 +39,17 @@
             <img src="images/smiley.svg" alt="smiley">
           </button>
           
-          <button type="button" class="control-button">
-            <img src="images/attach-icon.svg" alt="smiley">
-          </button>
-          
+          <div class="file-upload-wrapper">
+            <input type="file" accept="images/*" id="file-input" hidden>
+            <img class="preview-image" src="#">
+            
+            <button type="button" class="control-button" id="file-upload">
+              <img src="images/attach-icon.svg" alt="attach">
+            </button>
+          </div>
+
           <button type="submit" class="control-button send-message js-send-message">
-            <img src="images/send-icon.svg" alt="smiley">
+            <img src="images/send-icon.svg" alt="send">
           </button>
         </div>
       </form>
