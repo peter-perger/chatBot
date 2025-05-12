@@ -39,7 +39,8 @@ async function generateBotResponse (incomingMessageElement) {
    
   }
   catch (error) {
-    console.log(error);
+    messageElement.innerText = error.message;
+    messageElement.style.color = "#ff0000";
   }
   finally {
     incomingMessageElement.classList.remove('thinking');
