@@ -3,6 +3,7 @@ const messageInput = document.querySelector('.js-message-input');
 const sendMessageButton = document.querySelector('.js-send-message');
 const fileInput = document.querySelector('#file-input');
 const fileUploadWrapper = document.querySelector('.file-upload-wrapper');
+const fileCancelButton = document.querySelector('.preview-image');
 
 //API setup
 const API_key = "AIzaSyBk9GOPHZ6boo_fF6-vhUj4gop4stESTDQ"; 
@@ -133,6 +134,11 @@ fileInput.addEventListener("change", () => {
 
   reader.readAsDataURL(file);
 });
+
+fileCancelButton.addEventListener('click', () => {
+  userData.file = {};
+  fileUploadWrapper.classList.remove('file-uploaded');
+})
 
 sendMessageButton.addEventListener('click', (e) => handleOutgoingMessage(e));
 

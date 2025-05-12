@@ -300,4 +300,30 @@ body {
   transition: 0.3s ease-in-out;
 }
 
+.file-uploaded .attach-button .attach-image {
+  display: none;
+}
+
+.file-upload-wrapper .cancel {
+  opacity: 1;
+  transition: 0.2s ease-in-out;
+  height: 15px;
+
+  margin-top: 10px;
+  margin-left: 9px;
+
+  display: none;
+}
+
+.file-uploaded:hover .cancel {
+  opacity: 1;
+  display: block;
+}
+
+.file-uploaded:hover .preview-image {
+  opacity: 0;
+}
+
+
+
 
