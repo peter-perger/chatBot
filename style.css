@@ -204,6 +204,7 @@ body {
 }
 
 .footer .chat-form {
+  position: relative;
   background: #ffffff;
   
   border-radius: 32px;
@@ -324,6 +325,19 @@ body {
   opacity: 0;
 }
 
+em-emoji-picker {
+  position: absolute;
+  left: 50%;
+  top: -337px;
+  width: 100%;
+  max-width: 350px;
+  max-height: 330px;
+  visibility: hidden;
+  transform: translateX(-50%);
+}
 
+body.show-emoji-picker em-emoji-picker {
+  visibility: visible;
+}
 
 
